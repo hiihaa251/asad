@@ -1,0 +1,142 @@
+{
+  "253": {
+    "name": "PUBG Premium Account",
+    "price": "$150",
+    "category": "PUBG",
+    "description": "Level 80+, 10+ Legendary Skins",
+    "mediaType": "image",
+    "thumbnail": "images/1770913867108-779850457-pubg3.jpg"
+  },
+  "254": {
+    "name": "eFootball Pro Account",
+    "price": "$40",
+    "category": "eFootball",
+    "description": "5000+ Coins, Legend Players"
+  },
+  "301": {
+    "name": "PUBG Premium Account",
+    "price": "$50",
+    "category": "PUBG",
+    "description": "Level 70+, 10+ Legendary Skins, 5000+ UC, Royal Pass Season 15",
+    "mediaType": "image",
+    "thumbnail": "images/a1.png"
+  },
+  "302": {
+    "name": "PUBG UC Account",
+    "price": "Contact for price",
+    "category": "PUBG",
+    "description": "10 UC, Level 50, 5 Legendary Skins, Season 14 Complete",
+    "mediaType": "video",
+    "videoUrl": "videos/1.mp4",
+    "thumbnail": "https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+  },
+  "303": {
+    "name": "eFootball Pro Account",
+    "price": "$40",
+    "category": "eFootball",
+    "description": "5000+ Coins, Legend Players Pack, Team Build Complete",
+    "mediaType": "image",
+    "thumbnail": "images/efootball3.jpg"
+  },
+  "304": {
+    "name": "eFootball Team Account",
+    "price": "Contact for price",
+    "category": "eFootball",
+    "description": "Messi, Ronaldo, Mbappé, Full Legend Team, 3000 Coins",
+    "mediaType": "video",
+    "videoUrl": "videos/3.mp4",
+    "thumbnail": "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+  },
+  "305": {
+    "name": "PUBG UC ",
+    "price": "From $1.10",
+    "category": "UC",
+    "description": "PUBG UC packages",
+    "mediaType": "image",
+    "thumbnail": "images/pubg2.jpg",
+    "packages": [
+      {
+        "qty": "60 UC",
+        "price": "$1.10"
+      },
+      {
+        "qty": "120 UC",
+        "price": "$2.20"
+      },
+      {
+        "qty": "180 UC",
+        "price": "$3.25"
+      },
+      {
+        "qty": "325 UC",
+        "price": "$4.95"
+      },
+      {
+        "qty": "385 UC",
+        "price": "$5.95"
+      },
+      {
+        "qty": "660 UC",
+        "price": "$9.75"
+      },
+      {
+        "qty": "720 UC",
+        "price": "$10.75"
+      },
+      {
+        "qty": "985 UC",
+        "price": "$14.25"
+      },
+      {
+        "qty": "1320 UC",
+        "price": "$19.25"
+      },
+      {
+        "qty": "1800 UC",
+        "price": "$23.75"
+      },
+      {
+        "qty": "3850 UC",
+        "price": "$46.75"
+      },
+      {
+        "qty": "8100 UC",
+        "price": "$90.00"
+      }
+    ]
+  },
+  "306": {
+    "name": "eFootball Coins",
+    "price": "From $8",
+    "category": "Coins",
+    "description": "500 Coins ($8), 1000 Coins ($15), 2500 Coins ($30), 5000 Coins ($50)",
+    "mediaType": "image",
+    "thumbnail": "images/efootball3.jpg"
+  },
+  "307": {
+    "name": "PUBG Skins Collection",
+    "price": "Contact for price",
+    "category": "PUBG",
+    "description": "Mythic & Legendary Skins, Weapon Skins, Vehicle Skins",
+    "mediaType": "video",
+    "videoUrl": "videos/2.mp4",
+    "thumbnail": "https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+  },
+  "308": {
+    "name": "Legend Players",
+    "price": "Contact for price",
+    "category": "eFootball",
+    "description": "Messi 101, Ronaldo 101, Neymar 98, Mbappé 99, Haaland 97",
+    "mediaType": "image",
+    "thumbnail": "images/efootball4.jpg"
+  },
+  "309": {
+    "name": "pubg",
+    "price": "35",
+    "category": "game",
+    "description": "waa acc qiimo yar",
+    "mediaType": "video",
+    "videoUrl": "videos/1770845753376-257111682-generated_video_1dec125c-f84d-4a69-aa56-4add88de86f3.mp4",
+    "thumbnail": "images/a1.png"
+  }
+}

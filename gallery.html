@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZAD STORE</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Daawo sawirrada account-yada PUBG iyo eFootball. Hubi quality-ga/account aad rabto inta aadan iibsan!">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQ2PNZ1G1M"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-MQ2PNZ1G1M');
+    </script>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Additional styles for gallery */
+        .gallery-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 100px 0 60px;
+            text-align: center;
+        }
+        
+        .gallery-hero h1 {
+            font-size: 2.5rem;
+            color: #00adb5;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-hero p {
+            font-size: 1.1rem;
+            color: #8a8aa3;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+        
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+        
+        .filter-btn {
+            padding: 10px 25px;
+            background-color: #252542;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #00adb5;
+            transform: translateY(-3px);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* single column layout as requested */
+            gap: 25px;
+            padding: 20px 0 80px;
+        }
+        
+        .gallery-item {
+            background-color: #1a1a2e;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+            border: 1px solid #252542;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 173, 181, 0.2);
+            border-color: #00adb5;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .gallery-info {
+            padding: 20px;
+        }
+        
+        .gallery-info h3 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .gallery-info p {
+            color: #8a8aa3;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+        
+        .gallery-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #00adb5;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            z-index: 5;
+        }
+        
+        .id-display-gallery {
+            color: #00adb5;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+        
+        .back-home {
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(45deg, #252542, #1a1a2e);
+            aspect-ratio: 16/9; /* keep media at 16:9 */
+            display: block;
+            position: relative;
+            color: #8a8aa3;
+            font-size: 1rem;
+            overflow: hidden;
+            padding: 0;
+        }
+        
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 173, 181, 0.06),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+            z-index: 0;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%); }
+            100% { transform: translateX(100%) translateY(100%); }
+        }
+        
+        .image-placeholder i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            z-index: 2;
+            display: inline-block;
+            padding: 12px;
+        }
+
+        /* Ensure images scale to container and videos stay responsive */
+        .image-placeholder img,
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            z-index: 1;
+        }
+
+        .image-placeholder video,
+        .gallery-item video {
+            width: 100%;
+            height: auto; /* let height scale naturally on narrow viewports */
+            aspect-ratio: 16/9; /* keep 16:9 on supported browsers */
+            max-height: 420px; /* prevent overly tall videos on large screens */
+            object-fit: cover;
+            display: block;
+            z-index: 1;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .gallery-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-hero p {
+                font-size: 1rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr; /* keep single column on tablets */
+                gap: 15px;
+            }
+
+            .gallery-img,
+            .image-placeholder {
+                aspect-ratio: 16/9;
+                min-height: 120px;
+                max-height: none;
+            }
+
+            .image-placeholder video,
+            .gallery-item video {
+                max-height: none;
+                height: auto;
+            }
+            
+            .gallery-info {
+                padding: 15px;
+            }
+            
+            .gallery-info h3 {
+                font-size: 1rem;
+            }
+            
+            .gallery-info p {
+                font-size: 0.85rem;
+            }
+            
+            .filter-btn {
+                padding: 8px 20px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="lang-switcher" style="position:absolute;right:80px;top:18px;">
+                <select id="lang-select" style="padding:6px;border-radius:6px;background:#121226;color:#fff;border:1px solid #2b2b46">
+                    <option value="so">Somali</option>
+                    <option value="en">English</option>
+                    <option value="sw">Swahili</option>
+                </select>
+            </div>
+            <div class="logo">
+                <h1><i class="fas fa-gamepad"></i> AZAD STORE</h1>
+                <p>PUBG | eFootball | UC | Coins
+                <span class="online-indicator">
+            <span class="dot"></span> 
+            <span id="online-counter">85</span> Online
+        </span>
+                </p>
+                
+            </div>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <nav id="nav-menu">
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Qaybta Sawirrada</a>
+                <a href="index.html#products">Iibso</a>
+                <a href="#testimonials">Reviews</a>
+                <a href="#faq">FAQ</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="https://wa.me/252614476099" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </nav>
+        </div>
+    </header>
+   
+
+    <!-- Gallery Hero Section -->
+    <section class="gallery-hero">
+        <div class="container">
+            <h1><i class="fas fa-images"></i> Qaybta Sawirrada</h1>
+            <p>Daawo sawirrada fiican ee account-yada PUBG iyo eFootball ee aan haysano. Hubi quality-ga iyo features-ka before you buy!</p>
+            <a href="index.html#products" class="btn">
+                <i class="fas fa-shopping-cart"></i> Iibso Hada
+            </a>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <div class="container">
+        <div class="category-filter">
+            <button class="filter-btn active" data-filter="all">Dhammaan</button>
+            <button class="filter-btn" data-filter="pubg">PUBG</button>
+            <button class="filter-btn" data-filter="efootball">eFootball</button>
+            <button class="filter-btn" data-filter="uc">UC</button>
+            <button class="filter-btn" data-filter="coins">Coins</button>
+        </div>
+    </div>
+
+    <!-- Gallery Images -->
+    <section class="gallery">
+        <div class="container">
+            <div class="gallery-grid" id="dynamic-gallery"></div>
+                <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2><i class="fas fa-star"></i> Waxay Macaamiisheenu Ka Yiraahdeen</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        
+                    </div>
+                    <p>"UC-ga si degdeg ah ayuu ii soo gaadhay. Mahadsanid AZAD STORE!"</p>
+                    <div class="customer">
+                        <strong>Ahmed M.</strong>
+                        <span>PUBG Player</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"eFootball account-yga ma islahayn account kale iyo lacag yar ayaa ku hele!"</p>
+                    <div class="customer">
+                        <strong>Mohamed K.</strong>
+                        <span>eFootball Fan</span>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                       
+                    </div>
+                    <p>"Qiimaha waa raqiis, waxaana sii iibiyaa account tiyada !"</p>
+                    <div class="customer">
+                        <strong>keynuur </strong>
+                        <span>Regular Customer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2><i class="fas fa-question-circle"></i> Su'aalaha Inta Badan La Isweydiiyo</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3 data-i18n="faq_q1">Sidee loo iibsadaa account?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a1">Dooro account-ka aad rabto, riix "Iibso WhatsApp", follow TikTok, kadib WhatsApp ayaa furmi doonta oo noo dir message.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3 data-i18n="faq_q2">Ma safe baa account-yadu?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a2">Haa 100%! Dhammaan account-yadeena waa kuwo legal ah oo laga iibiyo si ammaan ah.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3 data-i18n="faq_q3">Intee in le'eg ayuu delivery-gu qaadanayaa?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a3">Inta badan 5-10 daqiiqo gudahood kadib markii lacagta la bixiyo.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3 data-i18n="faq_q4">Maxay yihiin payment methods-ka?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p data-i18n="faq_a4">Waxaan aqbalnaa: EVC-Plus, Zaad Service, PayPal, iyo Bank Transfer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews & Proofs section removed -->
+
+    <!-- Reviews submission (client-side, stored locally) -->
+    <section class="reviews-form" style="padding:30px 0;">
+        <div class="container">
+            <h3 style="color:#00adb5; text-align:center;">faalo ka bixi adeega</h3>
+            <form id="review-form" style="max-width:600px;margin:12px auto;">
+                <div class="form-group">
+                    <input id="rev-name" placeholder="Your name" required style="width:100%;padding:8px;border-radius:6px;background:#121226;color:#fff;border:1px solid #2b2b46">
+                </div>
+                <div class="form-group">
+                    <select id="rev-product" style="width:100%;padding:8px;border-radius:6px;background:#121226;color:#fff;border:1px solid #2b2b46;margin-bottom:8px">
+                        <option value="">General / Not specific</option>
+                        <option value="301">ID 301</option>
+                        <option value="302">ID 302</option>
+                        <option value="303">ID 303</option>
+                        <option value="304">ID 304</option>
+                        <option value="305">ID 305</option>
+                        <option value="306">ID 306</option>
+                        <option value="307">ID 307</option>
+                        <option value="308">ID 308</option>
+                    </select>
+                    <select id="rev-rating" style="width:100%;padding:8px;border-radius:6px;background:#121226;color:#fff;border:1px solid #2b2b46">
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Okay</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Bad</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea id="rev-text" rows="3" placeholder="Your feedback" style="width:100%;padding:8px;border-radius:6px;background:#121226;color:#fff;border:1px solid #2b2b46"></textarea>
+                </div>
+                <div style="text-align:center"><button id="submit-review" class="btn">Submit Review</button></div>
+                <p id="review-msg" style="display:none;color:#aaf;margin-top:10px;text-align:center;"></p>
+            </form>
+            <div id="local-reviews" style="max-width:800px;margin:20px auto 0"></div>
+        </div>
+    </section>
+
+            
+            <!-- Back to Home -->
+            <div class="back-home">
+                <a href="index.html" class="btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Ku Noqo Home Page
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-gamepad"></i> AZAD STORE</h3>
+                    <p>Your trusted source for PUBG & eFootball accounts, UC, and Coins.</p>
+                    <div class="security-badges">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>100% Secure</span>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="https://www.tiktok.com/@shaxaari238?_r=1&_t=ZS-93fGyFzc8D2" target="_blank">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://wa.me/252614476099" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year">2023</span> AZAD STORE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/252614476099" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- TikTok Follow Modal -->
+    <div id="tiktok-modal" class="modal">
+        <div class="modal-content tiktok-modal-content">
+            <span class="close-modal close-tiktok">&times;</span>
+            <div class="modal-header">
+                <i class="fab fa-tiktok" style="font-size: 3rem; color: #00f2ea;"></i>
+                <h3 style="margin-top: 15px;">Fadlan Follow So Dheh TikTok</h3>
+                <p style="color: #8a8aa3; margin-top: 10px;">Si aad u sii wado iibsiga</p>
+                <div class="countdown-timer">
+                    <p>WhatsApp wuxuu furmi doonaa: <span id="countdown">15</span>s</p>
+                </div>
+            </div>
+            
+            <a href="https://www.tiktok.com/@shaxaari238?_r=1&_t=ZS-93fGyFzc8D2" target="_blank" class="btn btn-full tiktok-follow-btn">
+                <i class="fab fa-tiktok"></i> Follow TikTok
+            </a>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content success-modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Mahadsanid!</h3>
+            <p>WhatsApp ayaa hadda furmaya...</p>
+        </div>
+    </div>
+
+    <!-- Payment Modal (for EVC / payment flow) -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h3 style="color:#00adb5">Payment / Bixin</h3>
+                <p style="color:#8a8aa3">Fadlan dooro habka lacag-bixinta.</p>
+            </div>
+
+            <div style="display:flex;gap:8px;margin:10px 0;flex-wrap:wrap">
+                <button class="method btn" data-method="evc">EVC-Plus</button>
+                <button class="method btn" data-method="zaad">Zaad</button>
+                <button class="method btn" data-method="paypal">PayPal</button>
+                <button class="method btn" data-method="bank">Bank Transfer</button>
+            </div>
+
+            <div id="error-message" style="display:none;color:#ff4d4d;margin:8px 0;font-weight:bold"></div>
+
+            <form id="payment-form">
+                <div style="margin:8px 0">
+                    <label style="color:#8a8aa3">Product ID / Project ID</label>
+                    <input id="project-id" placeholder="Enter product ID (e.g. 305)" style="width:100%;padding:8px;border-radius:6px;background:#121226;color:#fff;border:1px solid #2b2b46;margin-top:6px">
+                </div>
+
+                <div id="product-preview" style="display:none;background:#111224;padding:10px;border-radius:6px;margin:8px 0">
+                    <div id="preview-content"></div>
+                </div>
+
+                <div id="package-group" style="display:none;margin:8px 0">
+                    <label style="color:#8a8aa3">Packages</label>
+                    <select id="package-select" style="width:100%;padding:8px;border-radius:6px;background:#121226;color:#fff;border:1px solid #2b2b46;margin-top:6px"></select>
+                    <div id="package-price" style="color:#00adb5;margin-top:6px;display:none"></div>
+                </div>
+
+                <div style="text-align:center;margin-top:12px">
+                    <button type="submit" class="btn">Pay / Continue (WhatsApp)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/scripts.js"></script>
+    <script>
+        // Gallery Filtering
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                this.classList.add('active');
+                const filterValue = this.getAttribute('data-filter');
+                
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Update year in footer
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+</html>

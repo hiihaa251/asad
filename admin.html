@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Edit id.json</title>
+  <script>
+    // Check if user is logged in
+    if (!sessionStorage.getItem('admin_token')) {
+        window.location.href = 'login.html';
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .admin-editor{width:100%;height:60vh;background:#0b0b14;color:#fff;border:1px solid #222;padding:12px;border-radius:6px}
+    .admin-actions{margin:12px 0;display:flex;flex-wrap:wrap;gap:8px}
+    main.admin-main{padding:40px 0}
+    .action-group{min-width:220px;padding:8px;border-radius:8px;border:1px solid #222;background:#0b0b14}
+    .action-group strong{display:block;margin-bottom:8px;color:#00adb5}
+    .group-buttons{display:flex;gap:8px;flex-wrap:wrap}
+    .form-group{margin-bottom:15px}
+    .form-group label{display:block;color:#8a8aa3;margin-bottom:5px}
+    .form-group input, .form-group textarea, .form-group select{width:100%;padding:10px;border-radius:6px;background:#121226;color:#fff;border:1px solid #2b2b46}
+    #add-product-status { margin-top: 15px; font-weight: bold; }
+    .btn-danger{background:#ff4d4d;color:#fff}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>AZAD STORE</h1>
+        <p>PUBG | eFootball | UC | Coins <span class="online-indicator"><span class="dot"></span> <span id="online-counter">85</span> Online</span></p>
+      </div>
+      <div class="menu-toggle" id="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <nav id="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Qaybta Sawirrada</a>
+        <a href="index.html#products">Iibso</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://wa.me/252614476099" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <a href="#" id="logout-btn" style="color:#ff4d4d; font-weight:bold;">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="container">
+      <h2 style="margin-top:40px">Ku dar Product Cusub (Add New Product)</h2>
+      <p>Isticmaal form-kan si aad ugu darto product cusub. Si toos ah ayuu ugu dari doonaa <code>Database-ka</code> wuuna upload-garayn doonaa file-ka.</p>
+      <form id="add-product-form" style="background:#0b0b14; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #222;">
+        <div class="form-group">
+            <label for="productId">Product ID (Tusaale: 309)</label>
+            <input type="text" id="productId" name="id" required>
+        </div>
+        <div class="form-group">
+            <label for="productName">Magaca Product-ka (Name)</label>
+            <input type="text" id="productName" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="productPrice">Qiimaha (Price)</label>
+            <input type="text" id="productPrice" name="price" required>
+        </div>
+        <div class="form-group">
+            <label for="productCategory">Category (e.g., PUBG, eFootball, UC, Coins)</label>
+            <input type="text" id="productCategory" name="category" required>
+        </div>
+        <div class="form-group">
+            <label for="productDescription">Faahfaahin (Description)</label>
+            <textarea id="productDescription" name="description" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="productMedia">File-ka (Video ama Sawir)</label>
+            <input type="file" id="productMedia" name="mediaFile" accept="video/*,image/*" required>
+        </div>
+        <button type="submit" class="btn">Ku dar Product</button>
+      </form>
+      <div id="add-product-status"></div>
+
+      <h2 style="margin-top:40px; border-top:1px solid #222; padding-top:20px">Tirtir Product (Delete Product)</h2>
+      <p>Geli ID-ga product-ka aad rabto inaad tirtirto.</p>
+      <div class="form-group" style="background:#0b0b14; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #222;">
+          <label for="deleteProductId">Product ID</label>
+          <div style="display:flex; gap:10px;">
+              <input type="text" id="deleteProductId" placeholder="Enter ID (e.g. 301)" style="flex:1">
+              <button id="delete-product-btn" class="btn btn-danger">Tirtir (Delete)</button>
+          </div>
+          <div id="delete-status" style="margin-top:10px; font-weight:bold;"></div>
+      </div>
+
+      <h2 style="margin-top:40px; border-top:1px solid #222; padding-top:20px">Wax ka bedel Product (Edit Product)</h2>
+      <p>Geli ID-ga si aad u soo qaado xogta, kadibna wax ka bedel.</p>
+      <div class="form-group" style="background:#0b0b14; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #222;">
+          <div style="display:flex; gap:10px; margin-bottom:20px;">
+              <input type="text" id="editSearchId" placeholder="Enter ID to Edit (e.g. 301)" style="flex:1">
+              <button id="load-edit-btn" class="btn">Soo Qaado (Load)</button>
+          </div>
+          
+          <form id="edit-product-form" style="display:none;">
+              <input type="hidden" id="editId">
+              <div class="form-group">
+                  <label>Magaca (Name)</label>
+                  <input type="text" id="editName" name="name">
+              </div>
+              <div class="form-group">
+                  <label>Qiimaha (Price)</label>
+                  <input type="text" id="editPrice" name="price">
+              </div>
+              <div class="form-group">
+                  <label>Category</label>
+                  <input type="text" id="editCategory" name="category">
+              </div>
+              <div class="form-group">
+                  <label>Faahfaahin (Description)</label>
+                  <textarea id="editDescription" name="description" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                  <label>Bedel File-ka (Optional - leave empty to keep current)</label>
+                  <input type="file" id="editMedia" name="mediaFile" accept="video/*,image/*">
+              </div>
+              <button type="submit" class="btn" style="background:#00adb5;">Kaydi Isbedelka (Save Changes)</button>
+          </form>
+          <div id="edit-status" style="margin-top:10px; font-weight:bold;"></div>
+      </div>
+
+      <h2 style="margin-top:40px; border-top:1px solid #222; padding-top:20px">Bedel Password-ka Admin-ka</h2>
+      <div class="form-group" style="background:#0b0b14; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #222;">
+          <form id="change-password-form">
+              <div class="form-group">
+                  <label>Password-kii Hore (Old Password)</label>
+                  <input type="password" id="oldPassword" required>
+              </div>
+              <div class="form-group">
+                  <label>Username Cusub (New Username)</label>
+                  <input type="text" id="newUsername" required>
+              </div>
+              <div class="form-group">
+                  <label>Password Cusub (New Password)</label>
+                  <input type="password" id="newPassword" required>
+              </div>
+              <button type="submit" class="btn">Bedel (Update)</button>
+          </form>
+          <div id="password-status" style="margin-top:10px; font-weight:bold;"></div>
+      </div>
+
+      <h2 style="margin-top:40px; border-top:1px solid #222; padding-top:20px">Dalabaadka Macaamiisha (Customer Orders)</h2>
+      <div class="action-group">
+          <button id="refresh-orders" class="btn">Cusbooneysii Orders</button>
+      </div>
+      <div id="orders-list" style="margin-top:15px; overflow-x:auto;"></div>
+
+      <h2 style="margin-top:20px">Server Reviews</h2>
+      <div id="server-reviews-list" style="margin-top:10px"></div>
+    </div>
+  </main>
+
+  <a href="https://wa.me/252614476099" id="whatsapp-float" class="whatsapp-float" target="_blank" aria-label="Contact on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3><i class="fas fa-gamepad"></i> AZAD STORE</h3>
+          <p>Your trusted source for PUBG & eFootball accounts, UC, and Coins.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="index.html#products">Products</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Follow Us</h4>
+          <div class="social-links">
+            <a href="https://www.tiktok.com/@shaxaari238?_r=1&_t=ZS-93fGyFzc8D2" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://wa.me/252614476099" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom"><p>&copy; <span id="current-year"></span> AZAD STORE. All rights reserved.</p></div>
+    </div>
+  </footer>
+
+  <script>
+  const API_BASE = 'api';
+  
+  document.getElementById('logout-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem('admin_token');
+      window.location.href = 'login.html';
+  });
+
+  async function fetchServerReviews(){
+    try{
+      const r = await fetch(API_BASE + '/reviews.php');
+      const j = await r.json();
+      return j;
+    }catch(e){ console.error(e); return null; }
+  }
+  async function renderServerReviews(){
+    const list = document.getElementById('server-reviews-list'); list.innerHTML = 'Loading...';
+    const data = await fetchServerReviews();
+    if(!data) { list.innerHTML = '<p>Server not reachable.</p>'; return; }
+    if(data.length===0){ list.innerHTML = '<p>No reviews on server.</p>'; return; }
+    list.innerHTML = data.map(r=>`<div style="padding:10px;border:1px solid #222;margin-bottom:8px;border-radius:6px"><input type="checkbox" data-id="${r.id}"> <strong>${r.name}</strong> - <em>${r.rating}★</em><div style="color:#8a8aa3">${r.text}</div><div style="margin-top:6px"><button class="approve" data-id="${r.id}">Approve</button> <button class="delete" data-id="${r.id}">Delete</button></div></div>`).join('');
+    // wire buttons
+    list.querySelectorAll('.approve').forEach(b=>b.addEventListener('click', async ()=>{ const id=b.dataset.id; await fetch(API_BASE+`/reviews.php?id=${id}`, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({verified:true})}); renderServerReviews(); }));
+    list.querySelectorAll('.delete').forEach(b=>b.addEventListener('click', async ()=>{ const id=b.dataset.id; await fetch(API_BASE+`/reviews.php?id=${id}`, {method:'DELETE'}); renderServerReviews(); }));
+  }
+
+    // Handle New Product Form Submission
+    const addForm = document.getElementById('add-product-form');
+    const statusDiv = document.getElementById('add-product-status');
+
+    addForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        statusDiv.textContent = 'Uploading and saving...';
+        statusDiv.style.color = '#fff';
+
+        const formData = new FormData(addForm);
+
+        try {
+            const response = await fetch('api/add_product.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            // Isku day inaad text ahaan u aqriso marka hore si loo ogaado cilada
+            const text = await response.text();
+            let result;
+            try {
+                result = JSON.parse(text);
+            } catch (e) {
+                throw new Error(`Server Error (${response.status}): ${text || 'Jawaab eber ah (Empty response)'}. Fadlan hubi in faylasha PHP ay sax yihiin.`);
+            }
+
+            if (response.ok) {
+                statusDiv.style.color = '#00adb5';
+                statusDiv.textContent = 'Product added successfully!';
+                addForm.reset();
+            } else {
+                throw new Error(result.error || 'Failed to add product.');
+            }
+        } catch (error) {
+            statusDiv.style.color = '#ff4d4d';
+            statusDiv.textContent = 'Error: ' + error.message;
+        }
+    });
+
+    // Handle Delete Product
+    const deleteBtn = document.getElementById('delete-product-btn');
+    const deleteInput = document.getElementById('deleteProductId');
+    const deleteStatus = document.getElementById('delete-status');
+
+    deleteBtn.addEventListener('click', async () => {
+        const id = deleteInput.value.trim();
+        if(!id) {
+            alert('Fadlan geli ID-ga.');
+            return;
+        }
+        if(!confirm('Ma hubtaa inaad tirtirto product-ka ID: ' + id + '?')) return;
+
+        deleteStatus.textContent = 'Deleting...';
+        deleteStatus.style.color = '#fff';
+
+        try {
+            const response = await fetch('api/delete_product.php', { method: 'POST', body: JSON.stringify({id: id}) });
+            const text = await response.text();
+            let result;
+            try { 
+                result = JSON.parse(text); 
+            } catch(e) { 
+                // Haddii server-ku soo celiyo HTML (sida 404), waa calaamad in faylka PHP uusan jirin
+                if (text.trim().startsWith('<')) throw new Error('Server-ku ma aqoonsana amarkan (404/500). Hubi in api/delete_product.php uu jiro.');
+                throw new Error(text || 'Server error'); 
+            }
+
+            if(response.ok) {
+                deleteStatus.style.color = '#00adb5';
+                deleteStatus.textContent = 'Product deleted successfully.';
+                deleteInput.value = '';
+            } else {
+                throw new Error(result.error || 'Failed to delete.');
+            }
+        } catch (e) {
+            deleteStatus.style.color = '#ff4d4d';
+            deleteStatus.textContent = 'Error: ' + e.message;
+        }
+    });
+
+    // --- EDIT PRODUCT LOGIC ---
+    const loadEditBtn = document.getElementById('load-edit-btn');
+    const editSearchId = document.getElementById('editSearchId');
+    const editForm = document.getElementById('edit-product-form');
+    const editStatus = document.getElementById('edit-status');
+
+    loadEditBtn.addEventListener('click', async () => {
+        const id = editSearchId.value.trim();
+        if(!id) return alert('Please enter an ID');
+        
+        try {
+            const res = await fetch('api/get_products.php');
+            const data = await res.json();
+            if(data[id]) {
+                const p = data[id];
+                document.getElementById('editId').value = id;
+                document.getElementById('editName').value = p.name || '';
+                document.getElementById('editPrice').value = p.price || '';
+                document.getElementById('editCategory').value = p.category || '';
+                document.getElementById('editDescription').value = p.description || '';
+                document.getElementById('editMedia').value = ''; // Reset file input
+                
+                editForm.style.display = 'block';
+                editStatus.textContent = `Editing Product ID: ${id}`;
+                editStatus.style.color = '#00adb5';
+            } else {
+                alert('Product not found!');
+                editForm.style.display = 'none';
+            }
+        } catch(e) { alert('Error loading data'); }
+    });
+
+    editForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('editId').value;
+        const formData = new FormData(editForm);
+        
+        editStatus.textContent = 'Updating...';
+        
+        try {
+            const res = await fetch(`api/edit_product.php`, {
+                method: 'POST', // PHP handles file uploads better with POST
+                body: formData
+            });
+            const result = await res.json();
+            
+            if(res.ok) {
+                editStatus.textContent = 'Product updated successfully!';
+                editStatus.style.color = '#00adb5';
+                setTimeout(() => { editForm.style.display = 'none'; editSearchId.value = ''; }, 2000);
+            } else {
+                throw new Error(result.error);
+            }
+        } catch(e) {
+            editStatus.textContent = 'Error: ' + e.message;
+            editStatus.style.color = '#ff4d4d';
+        }
+    });
+
+    // --- CHANGE PASSWORD LOGIC ---
+    const passForm = document.getElementById('change-password-form');
+    const passStatus = document.getElementById('password-status');
+
+    passForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newUsername = document.getElementById('newUsername').value;
+        const newPassword = document.getElementById('newPassword').value;
+
+        passStatus.textContent = 'Updating...';
+        passStatus.style.color = '#fff';
+
+        try {
+            const res = await fetch('api/change_password.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oldPassword, newUsername, newPassword })
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                passStatus.style.color = '#00adb5';
+                passStatus.textContent = 'Guul! Waa la bedelay. Fadlan dib u soo gal (Login again).';
+                setTimeout(() => {
+                    sessionStorage.removeItem('admin_token');
+                    window.location.href = 'login.html';
+                }, 2000);
+            } else {
+                throw new Error(data.error || 'Failed to update');
+            }
+        } catch (err) {
+            passStatus.style.color = '#ff4d4d';
+            passStatus.textContent = 'Error: ' + err.message;
+        }
+    });
+
+    // --- RENDER ORDERS ---
+    async function renderOrders(){
+        const list = document.getElementById('orders-list');
+        list.innerHTML = 'Loading...';
+        try {
+            const res = await fetch('api/orders.php');
+            const orders = await res.json();
+            
+            if(!orders || orders.length === 0) {
+                list.innerHTML = '<p>No orders found.</p>';
+                return;
+            }
+
+            // Sort by date desc
+            orders.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+            let html = '<table style="width:100%; border-collapse:collapse; color:#fff; background:#0b0b14;">';
+            html += '<thead><tr style="background:#1a1a2e; text-align:left;">';
+            html += '<th style="padding:10px; border:1px solid #333;">Date</th>';
+            html += '<th style="padding:10px; border:1px solid #333;">Total</th>';
+            html += '<th style="padding:10px; border:1px solid #333;">Items</th>';
+            html += '</tr></thead><tbody>';
+
+            orders.forEach(o => {
+                const date = new Date(o.date).toLocaleString();
+                const items = o.items ? o.items.map(i => `${i.name} (x${i.qty})`).join(', ') : 'No items';
+                html += `<tr>
+                    <td style="padding:10px; border:1px solid #333;">${date}</td>
+                    <td style="padding:10px; border:1px solid #333;">${o.total}</td>
+                    <td style="padding:10px; border:1px solid #333;">${items}</td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            list.innerHTML = html;
+        } catch(e) {
+            list.innerHTML = '<p style="color:red">Error loading orders.</p>';
+        }
+    }
+    document.getElementById('refresh-orders').addEventListener('click', renderOrders);
+    renderOrders();
+
+    renderServerReviews();
+  </script>
+</body>
+</html>

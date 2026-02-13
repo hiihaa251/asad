@@ -1,0 +1,13 @@
+{
+  "name": "azadstore-local-api",
+  "version": "1.0.0",
+  "description": "Local API for Azad Store to persist reviews and orders during development",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.1",
+    "multer": "^2.0.2"
+  }
+}
