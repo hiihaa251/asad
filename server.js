@@ -193,7 +193,7 @@ app.put('/api/products/:id', upload.single('mediaFile'), (req, res) => {
 });
 
 // --- NEW: Login Endpoint (Basic) ---
-app.post('/api/login', (req, res) => {
+app.post(['/api/login', '/api/login.php'], (req, res) => {
     const { username, password } = req.body;
     // Read credentials from file, default to isma/123+ if file doesn't exist
     const config = readJson(ADMIN_CONFIG_FILE, { username: 'isma', password: '123+' });
@@ -206,7 +206,7 @@ app.post('/api/login', (req, res) => {
 });
 
 // --- NEW: Change Password Endpoint ---
-app.post('/api/change-password', (req, res) => {
+app.post(['/api/change-password', '/api/change-password.php'], (req, res) => {
     const { oldPassword, newUsername, newPassword } = req.body;
     const config = readJson(ADMIN_CONFIG_FILE, { username: 'isma', password: '123+' });
 
@@ -272,6 +272,7 @@ app.post('/api/orders', (req, res) => {
 
 app.use(express.static(path.join(__dirname)));
 
+app.listen(PORT, () => console.log(`API server running on http://localhost:${PORT}`));
 if (require.main === module) {
   app.listen(PORT, () => console.log(`API server running on http://localhost:${PORT}`));
 }
