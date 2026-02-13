@@ -272,4 +272,8 @@ app.post('/api/orders', (req, res) => {
 
 app.use(express.static(path.join(__dirname)));
 
-app.listen(PORT, () => console.log(`API server running on http://localhost:${PORT}`));
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`API server running on http://localhost:${PORT}`));
+}
+
+module.exports = app;
